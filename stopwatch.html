@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <style>
+        #stopwatch{
+            border: 2px solid black;
+            width: 200px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        button{
+            padding: 7px;
+            margin-left: 7px;
+            font-size: 1em;
+        }
+        #start, #stop{
+            background-color:#1A73E8 ;
+            color: white;
+        }
+        #reset{
+            background-color: white;
+            color: #1A73E8;
+        }
+    </style>
+</head>
+<body>
+    <div id="stopwatch">00:00:00</div>
+    <button id="start" onclick="start()">Start</button>
+    <button id="stop" onclick="Stop()">Stop</button>
+    <button id="reset" onclick="reset()">Reset</button>
+</body>
+
+<script>
+    let timer;
+    let seconds = 0;
+
+    function start() {
+        timer = setInterval(updateStopwatch, 1000);
+    }
+
+    function Stop() {
+        clearInterval(timer);
+    }
+
+    function reset() {
+        clearInterval(timer);
+        seconds = 0;
+        updateDisplay();
+    }
+
+    function updateStopwatch() {
+        seconds++;
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        const formattedTime = formatTime(seconds);
+        document.getElementById("stopwatch").innerText = formattedTime;
+    }
+
+    function formatTime(time) {
+        const hours = Math.floor(time / 3600);
+        const minutes = Math.floor((time % 3600) / 60);
+        const remainingSeconds = time % 60;
+
+        let result = "";
+
+        if (hours > 0) {
+            result += `${hours}h `;
+        }
+
+        if (minutes > 0 || hours > 0) {
+            result += `${minutes}m `;
+        }
+
+        result += `${remainingSeconds}s`;
+
+        return result;
+    }
+</script>
+</html>
